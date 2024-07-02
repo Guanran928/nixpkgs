@@ -1,8 +1,7 @@
 { config, pkgs, lib, ... }:
 
-with lib;
-
 let
+  inherit (lib) types attrByPath optionalString mkRenamedOptionModule mkOption literalExpression filterAttrs const isDerivation concatStringsSep attrNames mkIf;
   cfg = config.i18n.inputMethod.ibus;
   ibusPackage = pkgs.ibus-with-plugins.override { plugins = cfg.engines; };
   ibusEngine = types.package // {

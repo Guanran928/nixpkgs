@@ -1,7 +1,8 @@
 { config, pkgs, lib, ... }:
 
-with lib;
 let
+  inherit (lib) mkOption types mkIf;
+
   cfg = config.i18n.inputMethod;
 
   gtk2_cache = pkgs.runCommand "gtk2-immodule.cache"

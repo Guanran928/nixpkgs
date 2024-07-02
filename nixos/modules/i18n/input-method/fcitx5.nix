@@ -1,8 +1,7 @@
 { config, pkgs, lib, ... }:
 
-with lib;
-
 let
+  inherit (lib) mkOption types literalExpression mkRemovedOptionModule mkIf;
   im = config.i18n.inputMethod;
   cfg = im.fcitx5;
   fcitx5Package =
