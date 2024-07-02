@@ -1,4 +1,4 @@
-{ config, pkgs, lib, generators, ... }:
+{ config, pkgs, lib, ... }:
 let imcfg = config.i18n.inputMethod;
 in {
   imports = [
