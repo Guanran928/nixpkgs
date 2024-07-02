@@ -1,30 +1,56 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   inherit (lib) mkOption types mkIf;
 
   cfg = config.i18n.inputMethod;
 
-  gtk2_cache = pkgs.runCommandLocal "gtk2-immodule.cache"
-    { buildInputs = [ pkgs.gtk2 cfg.package ]; }
-    ''
-      mkdir -p $out/etc/gtk-2.0/
-      GTK_PATH=${cfg.package}/lib/gtk-2.0/ gtk-query-immodules-2.0 > $out/etc/gtk-2.0/immodules.cache
-    '';
+  gtk2_cache =
+    pkgs.runCommandLocal "gtk2-immodule.cache"
+      {
+        buildInputs = [
+          pkgs.gtk2
+          cfg.package
+        ];
+      }
+      ''
+        mkdir -p $out/etc/gtk-2.0/
+        GTK_PATH=${cfg.package}/lib/gtk-2.0/ gtk-query-immodules-2.0 > $out/etc/gtk-2.0/immodules.cache
+      '';
 
-  gtk3_cache = pkgs.runCommandLocal "gtk3-immodule.cache"
-    { buildInputs = [ pkgs.gtk3 cfg.package ]; }
-    ''
-      mkdir -p $out/etc/gtk-3.0/
-      GTK_PATH=${cfg.package}/lib/gtk-3.0/ gtk-query-immodules-3.0 > $out/etc/gtk-3.0/immodules.cache
-    '';
+  gtk3_cache =
+    pkgs.runCommandLocal "gtk3-immodule.cache"
+      {
+        buildInputs = [
+          pkgs.gtk3
+          cfg.package
+        ];
+      }
+      ''
+        mkdir -p $out/etc/gtk-3.0/
+        GTK_PATH=${cfg.package}/lib/gtk-3.0/ gtk-query-immodules-3.0 > $out/etc/gtk-3.0/immodules.cache
+      '';
 
 in
 {
   options.i18n = {
     inputMethod = {
       enabled = mkOption {
-        type    = types.nullOr (types.enum [ "ibus" "fcitx5" "nabi" "uim" "hime" "kime" ]);
+        type = types.nullOr (
+          types.enum [
+            "ibus"
+            "fcitx5"
+            "nabi"
+            "uim"
+            "hime"
+            "kime"
+          ]
+        );
         default = null;
         example = "fcitx5";
         description = ''
@@ -45,8 +71,8 @@ in
 
       package = mkOption {
         internal = true;
-        type     = types.nullOr types.path;
-        default  = null;
+        type = types.nullOr types.path;
+        default = null;
         description = ''
           The input method method package.
         '';
@@ -55,7 +81,11 @@ in
   };
 
   config = mkIf (cfg.enabled != null) {
-    environment.systemPackages = [ cfg.package gtk2_cache gtk3_cache ];
+    environment.systemPackages = [
+      cfg.package
+      gtk2_cache
+      gtk3_cache
+    ];
   };
 
   meta = {
