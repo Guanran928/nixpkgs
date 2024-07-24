@@ -34,19 +34,19 @@ let
 in
 stdenv.mkDerivation rec {
   pname = "pwvucontrol";
-  version = "0.4.2";
+  version = "0.4.5";
 
   src = fetchFromGitHub {
     owner = "saivert";
     repo = "pwvucontrol";
     rev = version;
-    hash = "sha256-cWNWdCMk9hF8Nzq2UFBEKSx1zS8JlplMG7B5gv7BaZA=";
+    hash = "sha256-s4sop1qmqPVOGX7erRfClUUcixNhi+wUY5MXSmv+zVk=";
   };
 
   cargoDeps = rustPlatform.importCargoLock {
     lockFile = ./Cargo.lock;
     outputHashes = {
-      "wireplumber-0.1.0" = "sha256-r3p4OpmMgiFgjn1Fj4LeMOhx6R2UWollIdJRy/0kiNM=";
+      "wireplumber-0.1.0" = "sha256-ocagwmjyhfx6n/9xKxF2vhylqy2HunKQRx3eMo6m/l4=";
     };
   };
 
