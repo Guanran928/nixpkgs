@@ -1,7 +1,6 @@
 {
   stdenv,
   lib,
-  fetchpatch,
   rustPlatform,
   fetchFromGitHub,
   installShellFiles,
@@ -14,16 +13,16 @@
 
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "colmena";
-  version = "0.4.0";
+  version = "0.4.0-unstable-2025-11-02";
 
   src = fetchFromGitHub {
     owner = "zhaofengli";
     repo = "colmena";
-    rev = "v${finalAttrs.version}";
-    sha256 = "sha256-01bfuSY4gnshhtqA1EJCw2CMsKkAx+dHS+sEpQ2+EAQ=";
+    rev = "349b035a5027f23d88eeb3bc41085d7ee29f18ed";
+    hash = "sha256-QVey3iP3UEoiFVXgypyjTvCrsIlA4ecx6Acaz5C8/PQ=";
   };
 
-  cargoHash = "sha256-2OLApLD/04etEeTxv03p0cx8O4O51iGiBQTIG/iOIkU=";
+  cargoHash = "sha256-v5vv66x+QiDhSa3iJ3Kf7PC8ZmK1GG8QdVD2a1L0r6M=";
 
   nativeBuildInputs = [
     installShellFiles
@@ -33,14 +32,6 @@ rustPlatform.buildRustPackage (finalAttrs: {
   buildInputs = [ nix-eval-jobs ];
 
   env.NIX_EVAL_JOBS = "${nix-eval-jobs}/bin/nix-eval-jobs";
-
-  patches = [
-    # Fixes nix 2.24 compat: https://github.com/zhaofengli/colmena/pull/236
-    (fetchpatch {
-      url = "https://github.com/zhaofengli/colmena/commit/36382ee2bef95983848435065f7422500c7923a8.patch";
-      sha256 = "sha256-5cQ2u3eTzhzjPN+rc6xWIskHNtheVXXvlSeJ1G/lz+E=";
-    })
-  ];
 
   postInstall = lib.optionalString (stdenv.buildPlatform.canExecute stdenv.hostPlatform) ''
     installShellCompletion --cmd colmena \
