@@ -348,6 +348,7 @@ in
     # The actual implementation for this lives in man-db.nix or mandoc.nix,
     # depending on which backend is active.
     (mkIf cfg.man.enable {
+      environment.systemPackages = [ pkgs.man-pages ];
       environment.pathsToLink = [ "/share/man" ];
       environment.extraOutputsToInstall = [ "man" ] ++ optional cfg.dev.enable "devman";
     })
