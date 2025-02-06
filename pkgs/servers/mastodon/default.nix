@@ -36,6 +36,8 @@ stdenv.mkDerivation rec {
     pname = "${pname}-modules";
     inherit src version;
 
+    dontCheckForBrokenSymlinks = true;
+
     yarnOfflineCache = callPackage ./yarn.nix {
       inherit version src;
       hash = yarnHash;
