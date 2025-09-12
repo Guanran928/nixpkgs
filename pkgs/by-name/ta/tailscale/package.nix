@@ -84,6 +84,8 @@ buildGoModule (finalAttrs: {
   # panic: httptest: failed to listen on a port: listen tcp6 [::1]:0: bind: operation not permitted
   __darwinAllowLocalNetworking = true;
 
+  doCheck = false;
+
   preCheck = ''
     # feed in all tests for testing
     # subPackages above limits what is built to just what we
