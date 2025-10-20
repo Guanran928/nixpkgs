@@ -19,12 +19,12 @@
 }:
 rustPlatform.buildRustPackage {
   pname = "psst";
-  version = "0-unstable-2025-04-20";
+  version = "0-unstable-2025-07-26";
 
   src = fetchFromGitHub {
     owner = "jpochyla";
     repo = "psst";
-    rev = "86169f8b05c1b3502261cfe1fae9af2487b8f1bb";
+    rev = "31861f47de93392a45bf315accc738f33d1b0cfc";
     hash = "sha256-BkGoaYflCTiElTj47r2j/ngUrZ9wIe0q4pl+zhoattA=";
   };
 
