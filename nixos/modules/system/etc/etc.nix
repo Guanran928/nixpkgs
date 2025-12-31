@@ -283,7 +283,7 @@ in
             ''}
 
             tmpMetadataMount=$(TMPDIR="/run" mktemp --directory -t nixos-etc-metadata.XXXXXXXXXX)
-            mount --type erofs --options ro,nodev,nosuid ${config.system.build.etcMetadataImage} "$tmpMetadataMount"
+            mount --type erofs --options ro,nodev,nosuid,x-gvfs-hide ${config.system.build.etcMetadataImage} "$tmpMetadataMount"
 
             # There was no previous /etc mounted. This happens when we're called
             # directly without an initrd, like with nixos-enter.
